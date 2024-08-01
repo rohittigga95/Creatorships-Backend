@@ -1,10 +1,10 @@
 const User = require("../Models/UserModel");
 const Creator = require("../Models/CreatorModel");
 const Business = require("../Models/BusinessModel");
-const Contact = require('../Models/ContactModel');
+const Contacts = require('../Models/ContactModel');
 const { createSecretToken } = require("../util/SecretToken");
 const bcrypt = require("bcrypt");
-
+const { userVerification, adminVerification } = require("../Middlewares/AuthMiddleware");
 
 module.exports.Signup = async (req, res, next) => {
     try {
@@ -66,7 +66,7 @@ module.exports.AdminLogin = async (req, res, next) => {
         const user = await User.findOne({ email });
         if (!user) {
             return res.json({ message: "Not admin." })
-        } else if(user.userType === 'admin') {
+        } else if (user.userType === 'admin') {
             const auth = await bcrypt.compare(password, user.password)
             if (!auth) {
                 return res.json({ message: "Incorrect password or email" })
@@ -88,50 +88,71 @@ module.exports.AdminLogin = async (req, res, next) => {
 
 module.exports.GetCreators = async (req, res) => {
     try {
-      const creators = await Creator.find();
-      res.json(creators);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  }
-  
-  module.exports.GetBusinesses =  async (req, res) => {
-    try {
-      const businesses = await Business.find();
-      res.json(businesses);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  }
+        
+        
+        if (() => adminVerification()) {
+            const creators = await Creator.find();
+            res.json(creators);
+        }
 
-  module.exports.PostCreators = async (req, res) => {
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+module.exports.GetContacts = async (req, res) => {
+    try {
+        
+        
+        if (() => adminVerification()) {
+            const contacts = await Contacts.find();
+            res.json(contacts);
+        }
+
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+module.exports.GetBusinesses = async (req, res) => {
+    try {
+        if (() => adminVerification()) {
+            const businesses = await Business.find();
+            res.json(businesses);
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+module.exports.PostCreators = async (req, res) => {
     const { name, email, link, createdAt } = req.body;
     // const creator = new Creator({ name, email, link });
     try {
-    
-      const creator = await Creator.create({ name, email, link, createdAt });
-      res.status(201).json({ message: "Creator signed in successfully", success: true,creator});
-    } catch (error) {
-      res.status(400).json({ message: error.message });
-    }
-  }
 
-  module.exports.Postbusinesses = async (req, res) => {
+        const creator = await Creator.create({ name, email, link, createdAt });
+        res.status(201).json({ message: "Creator signed in successfully", success: true, creator });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+}
+
+module.exports.Postbusinesses = async (req, res) => {
     const { name, email, link, createdAt } = req.body;
     try {
-     const business = await Business.create({ name, email, link, createdAt });
-      res.status(201).json({ message: "Business signed in successfully", success: true,business });
+        const business = await Business.create({ name, email, link, createdAt });
+        res.status(201).json({ message: "Business signed in successfully", success: true, business });
     } catch (error) {
-      res.status(400).json({ message: error.message });
+        res.status(400).json({ message: error.message });
     }
-  }
+}
 
-  module.exports.Contact = async (req,res) => {
+module.exports.Contact = async (req, res) => {
     const { fname, lname, email, phone, msg, createdAt } = req.body;
     try {
-        const contact = await Contact.create({ fname, lname, email, phone, msg, createdAt});
-        res.status(201).json({message:"Thankyou for contacting us", success: true, contact})
+        const contact = await Contact.create({ fname, lname, email, phone, msg, createdAt });
+        res.status(201).json({ message: "Thankyou for contacting us", success: true, contact })
     } catch (error) {
-        res.status(400).json({message: error.message});
+        res.status(400).json({ message: error.message });
     }
-  }
+}

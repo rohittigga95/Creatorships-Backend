@@ -13,7 +13,7 @@ mongoose
         useUnifiedTopology: true,
     })
     .then(() => console.log("mongodb is connected successfully"))
-    .catch(() => console.error(err));
+    .catch((err) => console.error(err));
 
 app.listen(PORT,() => {
     console.log(`server is listening on port ${PORT}`);
@@ -29,5 +29,5 @@ app.use(
 app.use(cookieParser());
 app.use(express.json());
 app.use("/", authRoute);
-
+app.use(express.static('public'))
 
