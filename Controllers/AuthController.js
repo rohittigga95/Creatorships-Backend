@@ -1,7 +1,7 @@
 const User = require("../Models/UserModel");
 const Creator = require("../Models/CreatorModel");
 const Business = require("../Models/BusinessModel");
-const Contacts = require('../Models/ContactModel');
+const Contact = require('../Models/ContactModel');
 const { createSecretToken } = require("../util/SecretToken");
 const bcrypt = require("bcrypt");
 const { userVerification, adminVerification } = require("../Middlewares/AuthMiddleware");
@@ -105,7 +105,7 @@ module.exports.GetContacts = async (req, res) => {
         
         
         if (() => adminVerification()) {
-            const contacts = await Contacts.find();
+            const contacts = await Contact.find();
             res.json(contacts);
         }
 
