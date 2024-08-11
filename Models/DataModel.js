@@ -4,10 +4,13 @@ const dataSchema = new mongoose.Schema({
     name: {
         type: String,     
     },
-    dataType: {
+    userType: {
         type: String,
     },
-    url: {
+    place: {
+        type: String,
+    },
+    link: {
         type: String,
     },
     img: {

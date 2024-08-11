@@ -1,4 +1,4 @@
-const { Signup, Login, AdminLogin, GetBusinesses, GetCreators, PostCreators, Postbusinesses, Contact, GetContacts } = require("../Controllers/AuthController");
+const { Signup,GetData, AddData, Login, AdminLogin, GetBusinesses, GetCreators, PostCreators, Postbusinesses, Contact, GetContacts } = require("../Controllers/AuthController");
 const { userVerification, adminVerification } = require("../Middlewares/AuthMiddleware");
 const router = require("express").Router();
 
@@ -14,5 +14,7 @@ router.get('/api/contacts', GetContacts);
 router.post('/api/creators',PostCreators);
 router.post('/api/businesses',Postbusinesses);
 router.post('/api/contact',Contact);
+router.post('/api/add',AddData);
+router.get('/api/data', GetData);
 
 module.exports = router;

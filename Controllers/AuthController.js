@@ -2,6 +2,7 @@ const User = require("../Models/UserModel");
 const Creator = require("../Models/CreatorModel");
 const Business = require("../Models/BusinessModel");
 const Contact = require('../Models/ContactModel');
+const Data = require('../Models/DataModel');
 const { createSecretToken } = require("../util/SecretToken");
 const bcrypt = require("bcrypt");
 const { userVerification, adminVerification } = require("../Middlewares/AuthMiddleware");
@@ -154,5 +155,26 @@ module.exports.Contact = async (req, res) => {
         res.status(201).json({ message: "Thankyou for contacting us", success: true, contact })
     } catch (error) {
         res.status(400).json({ message: error.message });
+    }
+}
+
+module.exports.AddData = async (req, res) => {
+    const { name, place, link,userType, img, createdAt } = req.body;
+    try {
+        const data = await Data.create({ name, place, link, img, userType, createdAt });
+        res.status(201).json({ message: "Customer Added", success: true, data })
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+}
+
+module.exports.GetData = async (req,res) => {
+    try {
+        if (() => adminVerification()) {
+            const data = await Data.find();
+            res.json(data);
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 }
