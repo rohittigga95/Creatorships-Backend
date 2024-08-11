@@ -1,4 +1,4 @@
-const { Signup,GetData, AddData, Login, AdminLogin, GetBusinesses, GetCreators, PostCreators, Postbusinesses, Contact, GetContacts } = require("../Controllers/AuthController");
+const { Signup,GetData,seamlessapi, AddData, Login, AdminLogin, GetBusinesses, GetCreators, PostCreators, Postbusinesses, Contact, GetContacts } = require("../Controllers/AuthController");
 const { userVerification, adminVerification } = require("../Middlewares/AuthMiddleware");
 const router = require("express").Router();
 
@@ -16,5 +16,6 @@ router.post('/api/businesses',Postbusinesses);
 router.post('/api/contact',Contact);
 router.post('/api/add',AddData);
 router.get('/api/data', GetData);
+router.get('/api/seamlessapi', seamlessapi);
 
 module.exports = router;
