@@ -21,7 +21,7 @@ app.listen(PORT,() => {
 
 app.use(
     cors({
-        origin: ["http://localhost:80"],
+        origin: ["http://ec2-3-6-89-177.ap-south-1.compute.amazonaws.com:5173"],
         methods: ["GET", "POST", "PUT", "DELETE"],
         credentials: true,
     })
