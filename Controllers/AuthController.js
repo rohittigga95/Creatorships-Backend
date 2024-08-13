@@ -183,11 +183,11 @@ module.exports.GetData = async (req, res) => {
 
 
 module.exports.seamlessapi = async (req, res) => {
-    const {country, industry, recordNo} = req.body; 
+    // const {country, industry, recordNo} = req.body; 
     
     let data = JSON.stringify({
         "companySearchId": null,
-        "limit": recordNo,
+        "limit": req.body.noOfRecord,
         "offset": 0,
         "page": 0,
         "type": "all",
@@ -199,7 +199,7 @@ module.exports.seamlessapi = async (req, res) => {
         ],
         "estimatedRevenues": [],
         "locations": [
-            country
+            req.body.countries
         ],
         "locationRadius": [],
         "zipCodes": [],
@@ -208,7 +208,7 @@ module.exports.seamlessapi = async (req, res) => {
         "companies": [],
         "companiesExactMatch": false,
         "companyKeywords": [
-            industry
+            req.body.industries
         ],
         "keywordsIsOr": false
     });
