@@ -16,6 +16,6 @@ router.post('/api/businesses',Postbusinesses);
 router.post('/api/contact',Contact);
 router.post('/api/add',AddData);
 router.get('/api/data', GetData);
-router.get('/api/seamlessapi', seamlessapi);
+router.post('/api/seamlessapi', seamlessapi);
 
 module.exports = router;
